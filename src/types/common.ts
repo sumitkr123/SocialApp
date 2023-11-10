@@ -1,4 +1,4 @@
-import {MaterialCommunityIcons} from '@/lib/utils';
+import {MaterialCommunityIcons} from '@/utils';
 import {ControllerRenderProps, FieldPath, FieldValues} from 'react-hook-form';
 import {
   ColorValue,
