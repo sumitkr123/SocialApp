@@ -39,8 +39,13 @@ export const RegistrationFormValidationSchema = yup.object().shape({
     .trim()
     .required('**Password is required.')
     .oneOf([yup.ref('password')], 'Both passwords must be same.'),
+  // acceptedConditions: yup
+  //   .boolean()
+  //   .oneOf([true], '**Please accept the terms and conditions.')
+  //   .default(false),
   acceptedConditions: yup
-    .boolean()
-    .oneOf([true], '**Please accept the terms and conditions.')
-    .default(false),
+    .array()
+    .min(1)
+    .of(yup.string<'NO1' | 'NO2'>().required())
+    .required(),
 });

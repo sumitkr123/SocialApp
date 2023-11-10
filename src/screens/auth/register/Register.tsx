@@ -15,7 +15,7 @@ import {useTheme} from '@/providers/ThemeProvider';
 import {MaterialCommunityIconsType} from '@/types/common';
 import {RegisterProps} from '@/types/navigation';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {useFieldArray, useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -34,12 +34,17 @@ export const Register = ({
     defaultValues: {
       username: '',
       password: '',
-      acceptedConditions: false,
+      acceptedConditions: [],
       email: '',
       fullname: '',
       repeatPassword: '',
     },
     mode: 'all',
+  });
+
+  const {fields, append, remove, replace} = useFieldArray({
+    control: form.control,
+    name: 'acceptedConditions',
   });
 
   const FormInputList: Array<{
