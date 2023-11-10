@@ -1,58 +1,19 @@
 import React from 'react';
 
-import {MaterialCommunityIconsType, cn} from '@/lib/utils';
+import {cn} from '@/lib/utils';
 import {useTheme} from '@/providers/ThemeProvider';
+import {InputProps} from '@/types/common';
 import {
-  ColorValue,
   InputModeOptions,
   KeyboardTypeOptions,
   TextInput,
-  TextInputProps,
-  TextStyle,
   View,
-  ViewStyle,
 } from 'react-native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {Icon} from '../Icon';
 
-type PassInputProps = {
-  type: 'password';
-  contentVisible?: boolean;
-  wantEye?: boolean;
-};
-
-type SimpleInputProps = {
-  type: 'text';
-};
-
-type EmailInputProps = {
-  type: 'email';
-};
-
-type NumberInputProps = {
-  type: 'number';
-};
-
-type CommonProps = {
-  icon?: React.ReactNode;
-  iconName?: keyof MaterialCommunityIconsType;
-  iconSize?: number;
-  iconColor?: ColorValue;
-  disabled?: boolean;
-  style?: ViewStyle;
-  inputStyle?: TextStyle;
-} & TextInputProps;
-
-type InputProps = (
-  | SimpleInputProps
-  | PassInputProps
-  | EmailInputProps
-  | NumberInputProps
-) &
-  CommonProps;
-
 export const Input = React.forwardRef(
-  (props: InputProps, ref): React.ReactNode => {
+  (props: InputProps, _ref): React.ReactNode => {
     const {
       type,
       disabled,
@@ -207,7 +168,7 @@ export const Input = React.forwardRef(
       if (type === 'password') {
         fielblock = (
           <Icon
-            name={'eye'}
+            name={visiblePass ? 'eye' : 'eye-off'}
             size={iconSize || 25}
             color={iconColor ? iconColor : isThemeDark ? 'white' : 'black'}
             onPress={() => {
@@ -221,7 +182,7 @@ export const Input = React.forwardRef(
       }
 
       return fielblock;
-    }, [type, props, iconColor, iconSize]);
+    }, [type, props, iconColor, iconSize, visiblePass]);
 
     return (
       <View

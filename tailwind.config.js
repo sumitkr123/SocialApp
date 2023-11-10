@@ -21,7 +21,7 @@ module.exports = {
         redhatlightitalic: ['redhatdisplay_lightitalic'],
         redhatmedium: ['redhatdisplay_medium'],
         redhatmediumitalic: ['redhatdisplay_mediumitalic'],
-        redhatsemibold: ['semibold'],
+        redhatsemibold: ['redhatdisplay_semibold'],
         redhatsemibolditalic: ['redhatdisplay_semibolditalic'],
       },
     },

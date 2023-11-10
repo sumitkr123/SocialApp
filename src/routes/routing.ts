@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Login} from '@/screens/auth/login';
+import {Register} from '@/screens/auth/register';
 import {RootAuthStackParamList, RootStackParamList} from '@/types/navigation';
 import {Auth} from './Routes';
 
@@ -21,5 +22,9 @@ export const AuthStackRouteList: Array<{
   {
     name: 'Login',
     component: Login,
+  },
+  {
+    name: 'Register',
+    component: Register,
   },
 ];

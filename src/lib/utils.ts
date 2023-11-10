@@ -6603,5 +6603,3 @@ export const MaterialCommunityIcons = {
   'zodiac-virgo': 985736,
   blank: 63116,
 };
-
-export type MaterialCommunityIconsType = typeof MaterialCommunityIcons;

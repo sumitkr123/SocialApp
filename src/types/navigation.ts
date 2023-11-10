@@ -29,3 +29,8 @@ export type LoginProps = NativeStackScreenProps<
   RootAuthStackParamList,
   'Login'
 >;
+
+export type RegisterProps = NativeStackScreenProps<
+  RootAuthStackParamList,
+  'Register'
+>;

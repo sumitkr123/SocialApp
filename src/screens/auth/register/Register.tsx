@@ -10,10 +10,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/Form';
-import {LoginFormValidationSchema} from '@/lib/validations';
+import {RegistrationFormValidationSchema} from '@/lib/validations';
 import {useTheme} from '@/providers/ThemeProvider';
 import {MaterialCommunityIconsType} from '@/types/common';
-import {LoginProps} from '@/types/navigation';
+import {RegisterProps} from '@/types/navigation';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
@@ -23,46 +23,80 @@ import {
 } from 'react-native-responsive-screen';
 import * as yup from 'yup';
 
-export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
+export const Register = ({
+  route,
+  navigation,
+}: RegisterProps): React.ReactNode => {
   const {isThemeDark} = useTheme();
 
-  const form = useForm<yup.InferType<typeof LoginFormValidationSchema>>({
-    resolver: yupResolver(LoginFormValidationSchema),
+  const form = useForm<yup.InferType<typeof RegistrationFormValidationSchema>>({
+    resolver: yupResolver(RegistrationFormValidationSchema),
     defaultValues: {
       username: '',
       password: '',
+      acceptedConditions: false,
+      email: '',
+      fullname: '',
+      repeatPassword: '',
     },
     mode: 'all',
   });
 
   const FormInputList: Array<{
-    name: keyof yup.InferType<typeof LoginFormValidationSchema>;
+    name: keyof yup.InferType<typeof RegistrationFormValidationSchema>;
     label?: string;
     placeholder?: string;
     required?: boolean;
-    type: 'text' | 'email' | 'password' | 'number';
+    type: 'text' | 'email' | 'password' | 'number' | 'checkbox' | 'radio';
     iconName?: keyof MaterialCommunityIconsType;
   }> = [
+    {
+      name: 'fullname',
+      label: 'Full name',
+      placeholder: 'Name Surname',
+      required: true,
+      type: 'text',
+    },
     {
       name: 'username',
       label: 'Username',
       placeholder: 'dummy_user123',
       required: true,
-      iconName: 'account',
       type: 'text',
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      placeholder: 'email@email.com',
+      required: true,
+      type: 'email',
     },
     {
       name: 'password',
       label: 'Password',
-      placeholder: '*******',
+      placeholder: '**********',
       required: true,
       type: 'password',
       iconName: 'key',
     },
+    {
+      name: 'repeatPassword',
+      label: 'Repeat password',
+      placeholder: '**********',
+      required: true,
+      type: 'password',
+      iconName: 'key',
+    },
+    {
+      name: 'acceptedConditions',
+      type: 'checkbox',
+      label: 'I accept the terms and conditions',
+      required: true,
+    },
   ];
 
   const onSubmit = async (
-    data: yup.InferType<typeof LoginFormValidationSchema>,
+    data: yup.InferType<typeof RegistrationFormValidationSchema>,
   ) => {
     console.log(data, 'data');
   };
@@ -87,7 +121,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
             <Text
               className="font-redhatmedium text-black dark:text-white mb-10"
               style={{fontSize: wp(8.2)}}>
-              Log in
+              Create an account
             </Text>
 
             {FormInputList.map(item => {
@@ -99,7 +133,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                   render={({field}) => {
                     return (
                       <FormItem className="flex flex-col gap-3 mb-8">
-                        <View className="flex flex-row flex-1z items-center justify-between">
+                        {item.type !== 'checkbox' && (
                           <FormLabel
                             className="text-black dark:text-white font-redhatmedium"
                             style={{fontSize: wp(4.5)}}>
@@ -108,15 +142,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                               <Text className="text-red-700">{'*'}</Text>
                             )}
                           </FormLabel>
-                          {item.name === 'password' && (
-                            <Text
-                              className="text-indigo-600 font-redhatmedium"
-                              style={{fontSize: hp(1.9)}}
-                              onPress={() => {}}>
-                              Forgot your password?
-                            </Text>
-                          )}
-                        </View>
+                        )}
 
                         <FormControl>
                           <FormInput
@@ -145,7 +171,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
               );
             })}
             <Button
-              title="Log in"
+              title="Sign up"
               variant="filled"
               className="mt-2"
               style={{height: hp(8.5)}}
@@ -157,24 +183,24 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
               }}
               onPress={form.handleSubmit(onSubmit)}
             />
+            <View
+              className="flex flex-row flex-1 items-center justify-center gap-1 pb-5 mt-5"
+              onTouchEnd={() => {
+                navigation.goBack();
+              }}>
+              <Text
+                className="font-redhatmedium text-black dark:text-white"
+                style={{fontSize: hp(2.1)}}>
+                Already have an account?
+              </Text>
+              <Text
+                className="font-redhatbold text-indigo-600"
+                style={{fontSize: hp(2.1)}}>
+                Log in
+              </Text>
+            </View>
           </ScrollView>
         </Form>
-        <View
-          className="flex flex-row flex-1 items-center justify-center gap-1 pb-5"
-          onTouchEnd={() => {
-            navigation.navigate('Register');
-          }}>
-          <Text
-            className="font-redhatmedium text-black dark:text-white"
-            style={{fontSize: hp(2.1)}}>
-            Don't have an account?
-          </Text>
-          <Text
-            className="font-redhatbold text-indigo-600"
-            style={{fontSize: hp(2.1)}}>
-            Sign Up
-          </Text>
-        </View>
       </View>
     </View>
   );

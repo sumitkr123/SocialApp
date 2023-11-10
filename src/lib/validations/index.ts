@@ -1,1 +1,1 @@
-export * from './LoginValidationSchema';
+export * from './schema';

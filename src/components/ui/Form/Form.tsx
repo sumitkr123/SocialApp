@@ -1,6 +1,12 @@
 import React from 'react';
 
 import {cn} from '@/lib/utils';
+import {useTheme} from '@/providers/ThemeProvider';
+import {
+  FormFieldContextValue,
+  FormInputProps,
+  FormItemContextValue,
+} from '@/types/common';
 import {
   Controller,
   ControllerProps,
@@ -10,15 +16,11 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import {Text, TextProps, View, ViewProps} from 'react-native';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {CheckBox} from '../Checkbox';
+import {Input} from '../Input';
 
 const Form = FormProvider;
-
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = {
-  name: TName;
-};
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue,
@@ -58,10 +60,6 @@ const useFormField = () => {
     formMessageId: `${id}-form-item-message`,
     ...fieldState,
   };
-};
-
-type FormItemContextValue = {
-  id: string;
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
@@ -159,11 +157,68 @@ const FormMessage = React.forwardRef<Text, TextProps>(
 );
 FormMessage.displayName = 'FormMessage';
 
+const FormInput = React.forwardRef<React.ReactElement, FormInputProps>(
+  (
+    {label, children, type, iconName, placeholder, onChange, ...props},
+    _ref,
+  ) => {
+    let fieldblock: React.ReactNode = <></>;
+
+    const {isThemeDark} = useTheme();
+
+    switch (type) {
+      case 'checkbox':
+        fieldblock = (
+          <View
+            className="flex flex-row items-center"
+            onTouchEnd={() => onChange(!props.value)}>
+            <CheckBox
+              onChecked={onChange}
+              isChecked={props.value}
+              variant="outlined"
+            />
+            <Text
+              className="text-black dark:text-white font-redhatmedium ml-2"
+              style={{fontSize: wp(4.5)}}>
+              {label}
+            </Text>
+          </View>
+        );
+        break;
+
+      case 'radio':
+        fieldblock = <></>;
+        break;
+
+      default:
+        fieldblock = (
+          <Input
+            type={type}
+            iconName={iconName}
+            iconColor={'#393a3b'}
+            inputStyle={{
+              fontSize: wp(4.2),
+            }}
+            placeholder={placeholder}
+            placeholderTextColor={isThemeDark ? 'white' : 'black'}
+            onChangeText={onChange}
+            {...props}
+          />
+        );
+        break;
+    }
+
+    return fieldblock;
+  },
+);
+FormInput.displayName = 'FormInput';
+
 export {
   Form,
   FormControl,
   FormDescription,
   FormField,
+  FormInput,
   FormItem,
   FormLabel,
   FormMessage,
