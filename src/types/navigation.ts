@@ -1,3 +1,4 @@
+import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
@@ -25,12 +26,14 @@ export type RootAuthStackParamList = {
     | undefined;
 };
 
-export type LoginProps = NativeStackScreenProps<
-  RootAuthStackParamList,
-  'Login'
+export type LoginProps = CompositeScreenProps<
+  NativeStackScreenProps<RootAuthStackParamList, 'Login'>,
+  NativeStackScreenProps<RootStackParamList>
 >;
 
 export type RegisterProps = NativeStackScreenProps<
   RootAuthStackParamList,
   'Register'
 >;
+
+export type HomeProps = NativeStackScreenProps<RootBottomTabParamList, 'Home'>;

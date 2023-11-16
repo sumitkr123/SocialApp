@@ -20,6 +20,7 @@ export const CheckBox = (props: CheckBoxProps): React.ReactNode => {
       onTouchEnd={() => onChecked(!isChecked)}>
       {isChecked && (
         <Icon
+          family="MaterialCommunity"
           name="check"
           size={17}
           color={variant === 'filled' ? 'white' : '#5738c2'}

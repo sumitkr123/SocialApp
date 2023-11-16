@@ -1,12 +1,24 @@
 import React from 'react';
 
-import {RootAuthStackParamList, RootStackParamList} from '@/types/navigation';
+import {CustomBottomTabBar} from '@/components/ui/BottomTabBar';
+import {
+  RootAuthStackParamList,
+  RootBottomTabParamList,
+  RootStackParamList,
+} from '@/types/navigation';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {AuthStackRouteList, NativeStackRouteList} from './routing';
+import {
+  AuthStackRouteList,
+  NativeBottomRouteList,
+  NativeStackRouteList,
+} from './routing';
 
 const AuthStack = createNativeStackNavigator<RootAuthStackParamList>();
+
+const BottomTab = createBottomTabNavigator<RootBottomTabParamList>();
 
 const NativeStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,6 +39,30 @@ export const Auth = (): React.JSX.Element => {
         );
       })}
     </AuthStack.Navigator>
+  );
+};
+
+export const BottomTabNavigator = () => {
+  return (
+    <BottomTab.Navigator
+      initialRouteName="Home"
+      tabBar={props => <CustomBottomTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: 'rgba(250,250,250,0.8)',
+        tabBarInactiveTintColor: 'rgba(0,0,0,1)',
+      }}>
+      {NativeBottomRouteList.map((item, index) => {
+        return (
+          <BottomTab.Screen
+            key={item.name}
+            name={item.name}
+            component={item.component}
+          />
+        );
+      })}
+    </BottomTab.Navigator>
   );
 };
 

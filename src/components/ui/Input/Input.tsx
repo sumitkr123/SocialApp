@@ -21,6 +21,7 @@ export const Input = React.forwardRef(
       inputStyle,
       className,
       icon,
+      family,
       iconName,
       iconSize,
       iconColor,
@@ -143,10 +144,11 @@ export const Input = React.forwardRef(
     const _renderIcon = React.useCallback(() => {
       let fielblock: React.ReactNode = <></>;
 
-      if (iconName) {
+      if (iconName && family) {
         fielblock = (
           <Icon
-            name={iconName}
+            family={family as any}
+            name={iconName as any}
             size={iconSize || 25}
             color={iconColor ? iconColor : isThemeDark ? 'white' : 'black'}
           />
@@ -160,7 +162,7 @@ export const Input = React.forwardRef(
       }
 
       return fielblock;
-    }, [icon, iconName, iconSize, iconColor, isThemeDark]);
+    }, [icon, family, iconName, iconSize, iconColor, isThemeDark]);
 
     const _renderEyeIcon = React.useCallback(() => {
       let fielblock: React.ReactNode = <></>;
@@ -168,6 +170,7 @@ export const Input = React.forwardRef(
       if (type === 'password') {
         fielblock = (
           <Icon
+            family="MaterialCommunity"
             name={visiblePass ? 'eye' : 'eye-off'}
             size={iconSize || 25}
             color={iconColor ? iconColor : isThemeDark ? 'white' : 'black'}
@@ -182,7 +185,7 @@ export const Input = React.forwardRef(
       }
 
       return fielblock;
-    }, [type, props, iconColor, iconSize, visiblePass]);
+    }, [type, props, iconColor, iconSize, visiblePass, isThemeDark]);
 
     return (
       <View

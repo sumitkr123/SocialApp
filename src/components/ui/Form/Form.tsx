@@ -159,7 +159,7 @@ FormMessage.displayName = 'FormMessage';
 
 const FormInput = React.forwardRef<React.ReactElement, FormInputProps>(
   (
-    {label, children, type, iconName, placeholder, onChange, ...props},
+    {label, children, type, family, iconName, placeholder, onChange, ...props},
     _ref,
   ) => {
     let fieldblock: React.ReactNode = <></>;
@@ -194,6 +194,7 @@ const FormInput = React.forwardRef<React.ReactElement, FormInputProps>(
         fieldblock = (
           <Input
             type={type}
+            family={family}
             iconName={iconName}
             iconColor={'#393a3b'}
             inputStyle={{
