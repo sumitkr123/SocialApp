@@ -9,6 +9,7 @@ import {ControllerRenderProps, FieldPath, FieldValues} from 'react-hook-form';
 import {
   ColorValue,
   PressableProps,
+  StyleProp,
   TextInputProps,
   TextProps,
   TextStyle,
@@ -41,13 +42,15 @@ export type ButtonProps = {
   title?: string;
   disabled?: boolean;
   textProps?: TextProps;
-  customWidget?: React.ReactNode;
+  children?: React.ReactNode;
   isLoading?: boolean;
   variant?: 'outlined' | 'filled';
   className?: string | undefined;
   btnClassName?: string | undefined;
   rippleColor?: ColorValue;
-} & PressableProps;
+  style?: StyleProp<ViewStyle>;
+  pressableStyle?: StyleProp<ViewStyle>;
+} & Omit<PressableProps, 'style'>;
 
 export type CheckBoxProps = {
   isChecked: boolean;

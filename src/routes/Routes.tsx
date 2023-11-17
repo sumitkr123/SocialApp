@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {CustomBottomTabBar} from '@/components/ui/BottomTabBar';
+import {CustomToast} from '@/components/ui/Toast';
 import {
   RootAuthStackParamList,
   RootBottomTabParamList,
@@ -86,6 +87,7 @@ export const Routes = (): React.JSX.Element => {
           })}
         </NativeStack.Navigator>
       </NavigationContainer>
+      <CustomToast />
     </SafeAreaProvider>
   );
 };

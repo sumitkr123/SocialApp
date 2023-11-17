@@ -2,14 +2,17 @@ import React from 'react';
 
 import {Icon} from '@/components/ui/Icon';
 import {ScreenWrapper} from '@/components/ui/ScreenWrapper';
+import {ToolTip} from '@/components/ui/ToolTip';
 import {useTheme} from '@/providers/ThemeProvider';
 import {HomeProps} from '@/types/navigation';
 import {tAppName} from '@/utils';
-import {FlatList, Image, Pressable, Text, View} from 'react-native';
+import {FlatList, Pressable, Text, View} from 'react-native';
+import Animated from 'react-native-reanimated';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import Toast from 'react-native-toast-message';
 
 export const Home = (props: HomeProps): React.ReactNode => {
   const {route, navigation} = props;
@@ -20,13 +23,13 @@ export const Home = (props: HomeProps): React.ReactNode => {
     return (
       <>
         <View
-          className="rounded-full border-black border-[0.5px] items-center justify-center overflow-hidden"
+          className="rounded-full border-black dark:border-white border-[0.5px] items-center justify-center overflow-hidden"
           style={{
             width: hp(9.5),
             height: hp(9.5),
           }}>
           <View
-            className="rounded-full border-black border-[0.5px] items-center justify-center"
+            className="rounded-full border-black dark:border-white border-[0.5px] items-center justify-center"
             style={{
               width: hp(8),
               height: hp(8),
@@ -40,7 +43,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
           </View>
         </View>
         <Text
-          className="font-redhatmedium text-black"
+          className="font-redhatmedium text-black dark:text-white mt-2"
           style={{fontSize: wp(4)}}>
           {item.userName}
         </Text>
@@ -63,7 +66,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
               width: hp(8),
               height: hp(8),
             }}>
-            <Image
+            <Animated.Image
               source={{
                 uri: 'https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg',
               }}
@@ -75,7 +78,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
           </View>
         </View>
         <Text
-          className="font-redhatmedium text-black"
+          className="font-redhatmedium text-black dark:text-white mt-2"
           style={{fontSize: wp(4)}}>
           {item.userName}
         </Text>
@@ -95,14 +98,19 @@ export const Home = (props: HomeProps): React.ReactNode => {
             {tAppName}
           </Text>
         </View>
-        <Icon
-          family={'Ionicons'}
-          name={'notifications'}
-          size={24}
-          color={isThemeDark ? 'white' : 'black'}
-        />
+        <ToolTip text={'Notification'}>
+          <Icon
+            onPress={() => {
+              console.log('hello');
+            }}
+            family={'Ionicons'}
+            name={'notifications'}
+            size={24}
+            color={isThemeDark ? 'white' : 'black'}
+          />
+        </ToolTip>
       </View>
-      <View key={'Stories'} className="flex overflow-hidden px-5 mt-7">
+      <View key={'Stories'} className="flex overflow-hidden px-[17px] mt-7">
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -130,8 +138,16 @@ export const Home = (props: HomeProps): React.ReactNode => {
           renderItem={({item, index}) => {
             return (
               <Pressable
-                className="flex flex-col justify-center items-center gap-2"
-                onPress={() => {}}>
+                className="flex flex-col justify-center items-center"
+                onPress={() => {
+                  // navigation.navigate('')
+                  Toast.show({
+                    type: 'success',
+                    text1: 'Success',
+                    text2: 'This is some message 👋',
+                    position: 'bottom',
+                  });
+                }}>
                 {index === 0 ? _renderYou(item) : _renderOthers(item)}
               </Pressable>
             );

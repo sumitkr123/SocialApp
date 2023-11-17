@@ -1,12 +1,14 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+
+import {ScreenWrapper} from '@/components/ui/ScreenWrapper';
+import {Text} from 'react-native';
 
 type CreateProps = {};
 
 export const Create = (props: CreateProps): React.ReactNode => {
   return (
-    <View>
-      <Text>Create</Text>
-    </View>
+    <ScreenWrapper>
+      <Text className="text-black dark:text-white">Create</Text>
+    </ScreenWrapper>
   );
 };

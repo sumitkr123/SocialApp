@@ -214,6 +214,7 @@ export const Register = ({
                   />
                 );
               })}
+
               <Button
                 title="Sign up"
                 variant="filled"
@@ -227,6 +228,7 @@ export const Register = ({
                 }}
                 onPress={form.handleSubmit(onSubmit)}
               />
+
               <View
                 className="flex flex-row flex-1 items-center justify-center gap-1 pb-5 mt-5"
                 onTouchEnd={() => {

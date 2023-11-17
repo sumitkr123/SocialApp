@@ -34,7 +34,7 @@ export const CustomBottomTabBar = React.memo(
     insets: EdgeInsets;
   }): React.JSX.Element => {
     return (
-      <View className="absolute flex flex-row justify-around w-full bottom-0 h-[75px] overflow-hidden bg-slate-300">
+      <View className="absolute flex flex-row justify-around w-full bottom-0 h-[75px] bg-slate-300 rounded-t-[40px]">
         {state.routes.map((route: any, index: number) => {
           const {options} = descriptors[route.key];
           const label =
@@ -62,22 +62,18 @@ export const CustomBottomTabBar = React.memo(
             <Pressable
               key={index}
               onPress={onPress}
-              className="flex justify-center items-center py-2">
-              {label === 'CreatePost' ? (
-                <View className={`-top-3 items-center justify-center`}>
-                  <NavigationIcon
-                    route={label}
-                    isFocused={isFocused}
-                    options={options}
-                  />
-                </View>
-              ) : (
-                <NavigationIcon
-                  route={label}
-                  isFocused={isFocused}
-                  options={options}
-                />
-              )}
+              className={`flex justify-center items-center py-2 ${
+                label === 'CreatePost'
+                  ? `top-[-20] z-0 rounded-full bg-white border-black border-[1.5px] w-16 h-16 ${
+                      isFocused ? 'bg-indigo-600' : ''
+                    }`
+                  : ''
+              }`}>
+              <NavigationIcon
+                route={label}
+                isFocused={isFocused}
+                options={options}
+              />
             </Pressable>
           );
         })}
@@ -148,8 +144,12 @@ const NavigationIcon = React.memo(
 
     let fieldBlock = (
       <View
-        className={`items-center justify-center rounded-full p-2 overflow-hidden ${
-          isFocused ? 'bg-indigo-600' : ''
+        className={`items-center justify-center rounded-full p-2 ${
+          isFocused
+            ? `bg-indigo-600 ${
+                route === 'CreatePost' ? 'border-[1.5px] border-white' : ''
+              }`
+            : ''
         }`}>
         <Icon
           family={icon.family as any}

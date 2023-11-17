@@ -189,6 +189,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                   />
                 );
               })}
+
               <Button
                 title="Log in"
                 variant="filled"
@@ -202,24 +203,25 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                 }}
                 onPress={form.handleSubmit(onSubmit)}
               />
+
+              <View
+                className="flex flex-row flex-1 items-center justify-center gap-1 mt-20 pb-5"
+                onTouchEnd={() => {
+                  navigation.navigate('Register');
+                }}>
+                <Text
+                  className="font-redhatmedium text-black dark:text-white"
+                  style={{fontSize: hp(2.1)}}>
+                  Don't have an account?
+                </Text>
+                <Text
+                  className="font-redhatbold text-indigo-600"
+                  style={{fontSize: hp(2.1)}}>
+                  Sign Up
+                </Text>
+              </View>
             </ScrollView>
           </Form>
-          <View
-            className="flex flex-row flex-1 items-center justify-center gap-1 pb-5"
-            onTouchEnd={() => {
-              navigation.navigate('Register');
-            }}>
-            <Text
-              className="font-redhatmedium text-black dark:text-white"
-              style={{fontSize: hp(2.1)}}>
-              Don't have an account?
-            </Text>
-            <Text
-              className="font-redhatbold text-indigo-600"
-              style={{fontSize: hp(2.1)}}>
-              Sign Up
-            </Text>
-          </View>
         </View>
       </View>
     </ScreenWrapper>

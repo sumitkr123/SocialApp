@@ -9,22 +9,25 @@ export const Button = (props: ButtonProps): React.ReactNode => {
     title,
     disabled,
     textProps,
-    customWidget,
     isLoading,
     className,
+    children,
     variant,
     btnClassName,
     rippleColor,
+    style,
     ...rest
   } = props;
   return (
     <View
+      style={style}
       className={cn(
-        `flex flex-1 rounded-xl justify-center overflow-hidden`,
+        `flex rounded-xl justify-center overflow-hidden`,
         className,
       )}>
       <Pressable
         {...rest}
+        style={rest.pressableStyle}
         disabled={disabled}
         android_ripple={{
           color: rippleColor || 'rgba(129,140,248,0.4)',
@@ -40,8 +43,8 @@ export const Button = (props: ButtonProps): React.ReactNode => {
           }`,
           btnClassName,
         )}>
-        {customWidget ? (
-          customWidget
+        {children ? (
+          children
         ) : (
           <View className="flex flex-row flex-1 gap-2 items-center justify-center">
             <Text

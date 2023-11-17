@@ -1795,6 +1795,11 @@
     metro-react-native-babel-transformer "0.76.8"
     metro-runtime "0.76.8"
 
+"@react-native/normalize-color@*":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-2.1.0.tgz#939b87a9849e81687d3640c5efa2a486ac266f91"
+  integrity sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==
+
 "@react-native/normalize-colors@*":
   version "0.74.1"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.74.1.tgz#6e8ccf99954728dcd3cfe0d56e758ee5050a7bea"
@@ -3082,6 +3087,15 @@ deprecated-react-native-prop-types@4.1.0:
   integrity sha512-WfepZHmRbbdTvhcolb8aOKEvQdcmTMn5tKLbqbXmkBvjFjRVWAYqsXk/DBsV8TZxws8SdGHLuHaJrHSQUPRdfw==
   dependencies:
     "@react-native/normalize-colors" "*"
+    invariant "*"
+    prop-types "*"
+
+deprecated-react-native-prop-types@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.3.0.tgz#c10c6ee75ff2b6de94bb127f142b814e6e08d9ab"
+  integrity sha512-pWD0voFtNYxrVqvBMYf5gq3NA2GCpfodS1yNynTPc93AYA/KEMGeWDqqeUB6R2Z9ZofVhks2aeJXiuQqKNpesA==
+  dependencies:
+    "@react-native/normalize-color" "*"
     invariant "*"
     prop-types "*"
 
@@ -6062,6 +6076,11 @@ react-native-screens@^3.27.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-toast-message@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.7.tgz#480ead6ea23e884f50ba467c818337d6830341e5"
+  integrity sha512-5zX3T5buVpg4bn9KZYVZ2VUQiLQZ1FHSM2AFQHVpgeKMYb+Gq+jt7wjhfPqhuMkJElQr7XNrnRw/rBCdD+7Q9w==
+
 react-native-vector-icons@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-10.0.1.tgz#ef5aa98034c5fb7cc45cd0c6ea5f37c74ce4c44b"
@@ -6355,6 +6374,13 @@ rn-fetch-blob@^0.12.0:
   dependencies:
     base-64 "0.1.0"
     glob "7.0.6"
+
+rn-tooltip@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/rn-tooltip/-/rn-tooltip-3.0.3.tgz#33232c76b90fc6d90ced565ddd5aab5517761a21"
+  integrity sha512-GWL4TCCPLu06CY/0aOYOx7GSbmwWZok9fYxrOcfE0OD3Z5hCY8lCJme0ivQj8ZnTk3IJyDAedc3fFH1I/J3NrQ==
+  dependencies:
+    deprecated-react-native-prop-types "^2.3.0"
 
 run-parallel@^1.1.9:
   version "1.2.0"
