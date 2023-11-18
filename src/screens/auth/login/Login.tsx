@@ -21,7 +21,7 @@ import {
   MaterialCommunityIconsType,
 } from '@/types/common';
 import {LoginProps} from '@/types/navigation';
-import {tAppName} from '@/utils';
+import {StaticTexts} from '@/utils';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
@@ -64,8 +64,8 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
   }> = [
     {
       name: 'username',
-      label: 'Username',
-      placeholder: 'dummy_user123',
+      label: StaticTexts.LoginScreen.Input1,
+      placeholder: StaticTexts.LoginScreen.Input1PH,
       required: true,
       type: 'text',
       iconFamily: 'MaterialCommunity',
@@ -73,8 +73,8 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
     },
     {
       name: 'password',
-      label: 'Password',
-      placeholder: '*******',
+      label: StaticTexts.LoginScreen.Input2,
+      placeholder: StaticTexts.LoginScreen.Input2PH,
       required: true,
       type: 'password',
       iconFamily: 'Entypo',
@@ -131,12 +131,12 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
           <Text
             className="font-redhatbold text-gray-200 dark:text-indigo-600"
             style={{fontSize: wp(9)}}>
-            {tAppName}
+            {StaticTexts.AppName}
           </Text>
           <Text
             className="font-redhatmedium text-slate-300 dark:text-slate-400"
             style={{fontSize: wp(3.8)}}>
-            Your favourite social network
+            {StaticTexts.LoginScreen.Subtitle}
           </Text>
         </View>
         <View className="flex-1 w-full bg-white dark:bg-gray-900 rounded-t-[40px] pt-10">
@@ -145,7 +145,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
               <Text
                 className="font-redhatmedium text-black dark:text-white mb-10"
                 style={{fontSize: wp(8.2)}}>
-                Log in
+                {StaticTexts.LoginScreen.ContentHeader}
               </Text>
 
               {FormInputList.map(item => {
@@ -171,7 +171,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                                 className="text-indigo-600 font-redhatmedium"
                                 style={{fontSize: hp(1.9)}}
                                 onPress={() => {}}>
-                                Forgot your password?
+                                {StaticTexts.LoginScreen.ForgotPass}
                               </Text>
                             )}
                           </View>
@@ -191,7 +191,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
               })}
 
               <Button
-                title="Log in"
+                title={StaticTexts.Login}
                 variant="filled"
                 className="mt-2"
                 style={{height: hp(8.5)}}
@@ -212,12 +212,12 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                 <Text
                   className="font-redhatmedium text-black dark:text-white"
                   style={{fontSize: hp(2.1)}}>
-                  Don't have an account?
+                  {StaticTexts.LoginScreen.DontHaveAc1}
                 </Text>
                 <Text
                   className="font-redhatbold text-indigo-600"
                   style={{fontSize: hp(2.1)}}>
-                  Sign Up
+                  {StaticTexts.LoginScreen.DontHaveAc2}
                 </Text>
               </View>
             </ScrollView>

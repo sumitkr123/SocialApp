@@ -21,7 +21,7 @@ import {
   MaterialCommunityIconsType,
 } from '@/types/common';
 import {RegisterProps} from '@/types/navigation';
-import {tAppName} from '@/utils';
+import {StaticTexts} from '@/utils';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
@@ -71,29 +71,29 @@ export const Register = ({
   }> = [
     {
       name: 'fullname',
-      label: 'Full name',
-      placeholder: 'Name Surname',
+      label: StaticTexts.SignUpScreen.Input1,
+      placeholder: StaticTexts.SignUpScreen.Input1PH,
       required: true,
       type: 'text',
     },
     {
       name: 'username',
-      label: 'Username',
-      placeholder: 'dummy_user123',
+      label: StaticTexts.SignUpScreen.Input2,
+      placeholder: StaticTexts.SignUpScreen.Input2PH,
       required: true,
       type: 'text',
     },
     {
       name: 'email',
-      label: 'Email',
-      placeholder: 'email@email.com',
+      label: StaticTexts.SignUpScreen.Input3,
+      placeholder: StaticTexts.SignUpScreen.Input3PH,
       required: true,
       type: 'email',
     },
     {
       name: 'password',
-      label: 'Password',
-      placeholder: '**********',
+      label: StaticTexts.SignUpScreen.Input4,
+      placeholder: StaticTexts.SignUpScreen.Input4PH,
       required: true,
       type: 'password',
       iconFamily: 'Entypo',
@@ -101,8 +101,8 @@ export const Register = ({
     },
     {
       name: 'repeatPassword',
-      label: 'Repeat password',
-      placeholder: '**********',
+      label: StaticTexts.SignUpScreen.Input5,
+      placeholder: StaticTexts.SignUpScreen.Input5PH,
       required: true,
       type: 'password',
       iconFamily: 'Entypo',
@@ -111,7 +111,7 @@ export const Register = ({
     {
       name: 'acceptedConditions',
       type: 'checkbox',
-      label: 'I accept the terms and conditions',
+      label: StaticTexts.SignUpScreen.ACPTC,
       required: true,
     },
   ];
@@ -164,12 +164,12 @@ export const Register = ({
           <Text
             className="font-redhatbold text-gray-200 dark:text-indigo-600"
             style={{fontSize: wp(9)}}>
-            {tAppName}
+            {StaticTexts.AppName}
           </Text>
           <Text
             className="font-redhatmedium text-slate-300 dark:text-slate-400"
             style={{fontSize: wp(3.8)}}>
-            Your favourite social network
+            {StaticTexts.SignUpScreen.Subtitle}
           </Text>
         </View>
         <View className="flex-1 w-full bg-white dark:bg-gray-900 rounded-t-[40px] pt-10">
@@ -178,7 +178,7 @@ export const Register = ({
               <Text
                 className="font-redhatmedium text-black dark:text-white mb-10"
                 style={{fontSize: wp(8.2)}}>
-                Create an account
+                {StaticTexts.SignUpScreen.ContentHeader}
               </Text>
 
               {FormInputList.map(item => {
@@ -216,7 +216,7 @@ export const Register = ({
               })}
 
               <Button
-                title="Sign up"
+                title={StaticTexts.Signup}
                 variant="filled"
                 className="mt-2"
                 style={{height: hp(8.5)}}
@@ -237,12 +237,12 @@ export const Register = ({
                 <Text
                   className="font-redhatmedium text-black dark:text-white"
                   style={{fontSize: hp(2.1)}}>
-                  Already have an account?
+                  {StaticTexts.SignUpScreen.AlreadyHaveAc1}
                 </Text>
                 <Text
                   className="font-redhatbold text-indigo-600"
                   style={{fontSize: hp(2.1)}}>
-                  Log in
+                  {StaticTexts.SignUpScreen.AlreadyHaveAc2}
                 </Text>
               </View>
             </ScrollView>

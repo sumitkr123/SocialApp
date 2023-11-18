@@ -63,10 +63,8 @@ export const CustomBottomTabBar = React.memo(
               key={index}
               onPress={onPress}
               className={`flex justify-center items-center py-2 ${
-                label === 'CreatePost'
-                  ? `top-[-20] z-0 rounded-full bg-white border-black border-[1.5px] w-16 h-16 ${
-                      isFocused ? 'bg-indigo-600' : ''
-                    }`
+                isFocused
+                  ? `top-[-20] z-0 rounded-full border-black border-[1.5px] w-16 h-16 bg-indigo-600`
                   : ''
               }`}>
               <NavigationIcon
@@ -145,11 +143,7 @@ const NavigationIcon = React.memo(
     let fieldBlock = (
       <View
         className={`items-center justify-center rounded-full p-2 ${
-          isFocused
-            ? `bg-indigo-600 ${
-                route === 'CreatePost' ? 'border-[1.5px] border-white' : ''
-              }`
-            : ''
+          isFocused ? `bg-indigo-600 border-[1.5px] border-white` : ''
         }`}>
         <Icon
           family={icon.family as any}
