@@ -17,7 +17,7 @@ import {
   ParamListBase,
   TabNavigationState,
 } from '@react-navigation/native';
-import {Pressable, Text, View} from 'react-native';
+import {Animated, Text, View} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {Icon} from '../Icon';
@@ -33,6 +33,28 @@ export const CustomBottomTabBar = React.memo(
     navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
     insets: EdgeInsets;
   }): React.JSX.Element => {
+    const [focusedTab, setFocusedTab] = React.useState(0);
+    const mappable = [0, 1, 2, 3, 4];
+
+    const topMargins = mappable.map((item, index) => {
+      return React.useState(
+        index === focusedTab
+          ? new Animated.Value(-25)
+          : new Animated.Value(-10),
+      )[0];
+    });
+
+    React.useEffect(() => {
+      topMargins.forEach((s, index) => {
+        let value = focusedTab === index ? -25 : -10;
+        Animated.timing(s, {
+          toValue: value,
+          duration: 200,
+          useNativeDriver: false,
+        }).start();
+      });
+    }, [focusedTab]);
+
     return (
       <View className="absolute flex flex-row justify-around w-full bottom-0 h-[75px] bg-slate-300 rounded-t-[40px]">
         {state.routes.map((route: any, index: number) => {
@@ -59,12 +81,18 @@ export const CustomBottomTabBar = React.memo(
           };
 
           return (
-            <Pressable
+            <Animated.View
               key={index}
-              onPress={onPress}
+              onTouchEnd={() => {
+                setFocusedTab(index);
+                onPress();
+              }}
+              style={{
+                marginTop: topMargins[index],
+              }}
               className={`flex justify-center items-center py-2 ${
                 isFocused
-                  ? `top-[-20] z-0 rounded-full border-black border-[1.5px] w-16 h-16 bg-indigo-600`
+                  ? `z-0 rounded-full border-black border-[1.5px] w-16 h-16 bg-indigo-600`
                   : ''
               }`}>
               <NavigationIcon
@@ -72,7 +100,7 @@ export const CustomBottomTabBar = React.memo(
                 isFocused={isFocused}
                 options={options}
               />
-            </Pressable>
+            </Animated.View>
           );
         })}
       </View>

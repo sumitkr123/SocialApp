@@ -150,15 +150,24 @@ export const Home = (props: HomeProps): React.ReactNode => {
           />
         </View>
 
-        <View key={'Posts'} className="flex flex-1 px-5 mt-10">
-          <PostCard
-            profile_Pic={
-              'https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg'
-            }
-            userName={'dummy_user123'}
-            postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
-            postText="This is loremn Lorem ipsum dolor poster djksfjk asdfgaju asuidfghju sduikgfuias asuidfuias uiksdghfuiasdhfkasdfknasjkn"
-          />
+        <View key={'Posts'} className="flex flex-1 flex-col px-5 mt-10">
+          {[1, 2].map((item, index) => {
+            return (
+              <PostCard
+                key={item}
+                post_id={item.toString()}
+                className={index > 0 ? 'mt-8' : ''}
+                profile_Pic={
+                  'https://lh3.googleusercontent.com/ogw/AKPQZvwHnNI_7DZfP_nwoa4qyxOFI1vMw88CU0SjOP6vWA=s32-c-mo'
+                }
+                userName={'dummy_user123'}
+                postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
+                postText="This is loremn Lorem ipsum dolor poster djksfjk asdfgaju asuidfghju sduikgfuias asuidfuias uiksdghfuiasdhfkasdfknasjkn"
+                likeCount={1002}
+                likedByyou={true}
+              />
+            );
+          })}
         </View>
       </ScrollView>
     </ScreenWrapper>

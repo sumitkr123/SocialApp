@@ -1,4 +1,5 @@
 import {Icon} from '@/components/ui/Icon';
+import {cn} from '@/lib/utils';
 import {useTheme} from '@/providers/ThemeProvider';
 import React from 'react';
 import {Image, Text, View} from 'react-native';
@@ -8,6 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 
 type PostCardProps = {
+  post_id: string;
   profile_Pic: string;
   userName: string;
   postText?: string;
@@ -15,12 +17,15 @@ type PostCardProps = {
   commentCount?: number;
   likeCount?: number;
   likedByyou?: boolean;
+  className?: string;
 };
 
 export const PostCard = (props: PostCardProps): React.ReactNode => {
   const {
+    post_id,
     profile_Pic,
     userName,
+    className,
     commentCount,
     likeCount,
     likedByyou,
@@ -29,6 +34,10 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
   } = props;
 
   const {isThemeDark} = useTheme();
+
+  const [liked, setLiked] = React.useState(likedByyou);
+
+  const [menuVisible, setMenuVisible] = React.useState(false);
 
   const _renderProfileHeaderBar = () => {
     let fieldBlock: React.ReactNode = <></>;
@@ -56,13 +65,34 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
             {userName}
           </Text>
         </View>
-
         <Icon
           family="MaterialCommunity"
           name="dots-horizontal"
           color={isThemeDark ? 'white' : 'black'}
           size={24}
+          onPress={() => {
+            setMenuVisible(prev => !prev);
+          }}
         />
+        {menuVisible && (
+          <View className="absolute z-50 right-0 top-8 bg-gray-500 rounded-[8px] px-5 py-3">
+            <Text
+              style={{fontSize: wp(4)}}
+              className="font-redhatmedium text-white">
+              ABCD
+            </Text>
+            <Text
+              style={{fontSize: wp(4)}}
+              className="font-redhatmedium text-white">
+              ABCD
+            </Text>
+            <Text
+              style={{fontSize: wp(4)}}
+              className="font-redhatmedium text-white">
+              ABCD
+            </Text>
+          </View>
+        )}
       </View>
     );
 
@@ -104,10 +134,88 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
     return fieldBlock;
   };
 
+  const _renderComments = () => {
+    if (commentCount) {
+      if (commentCount > 1) {
+        return commentCount + ' comments';
+      } else {
+        return commentCount + ' comment';
+      }
+    } else {
+      return '0 comments';
+    }
+  };
+
+  const _renderLikes = () => {
+    if (likeCount) {
+      if (likeCount > 1 && likedByyou) {
+        if (likeCount - 1 > 1) {
+          if (likeCount - 1 > 1000) {
+            return 'You' + ' & 1k+ others';
+          } else {
+            return 'You' + ' & ' + (likeCount - 1) + ' others';
+          }
+        } else {
+          return 'You' + ' & ' + (likeCount - 1) + ' other';
+        }
+      } else {
+        return likeCount > 1
+          ? likeCount > 1000
+            ? '1k+ likes'
+            : likeCount + ' likes'
+          : likeCount + ' like';
+      }
+    } else {
+      return '0 likes';
+    }
+  };
+
+  const _renderPostFooter = () => {
+    let fieldBlock: React.ReactNode = <></>;
+    fieldBlock = (
+      <View className="flex flex-1 flex-row justify-between w-full mt-3">
+        <View className="flex flex-row items-center">
+          <Icon
+            family="Ionicons"
+            name="chatbox"
+            color={isThemeDark ? 'white' : 'black'}
+            size={24}
+          />
+          <Text
+            className="font-redhatmedium text-gray-600 dark:text-white ml-3 -mt-1"
+            style={{
+              fontSize: wp(4),
+            }}>
+            {_renderComments()}
+          </Text>
+        </View>
+        <View className="flex flex-row items-center">
+          <Text
+            className="font-redhatmedium text-gray-600 dark:text-white mr-3"
+            style={{
+              fontSize: wp(4),
+            }}>
+            {_renderLikes()}
+          </Text>
+          <Icon
+            family="Ionicons"
+            name="heart"
+            color={liked ? '#bf0465' : 'gray'}
+            size={26}
+            onPress={() => setLiked(prev => !prev)}
+          />
+        </View>
+      </View>
+    );
+
+    return fieldBlock;
+  };
+
   return (
-    <View className="flex flex-1 w-full">
+    <View key={post_id} className={cn(`flex flex-1 w-full ${className}`)}>
       {_renderProfileHeaderBar()}
       {_renderPost()}
+      {_renderPostFooter()}
     </View>
   );
 };
