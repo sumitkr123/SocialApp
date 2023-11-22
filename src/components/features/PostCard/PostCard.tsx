@@ -1,7 +1,8 @@
+import React from 'react';
+
 import {Icon} from '@/components/ui/Icon';
 import {cn} from '@/lib/utils';
 import {useTheme} from '@/providers/ThemeProvider';
-import React from 'react';
 import {Image, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -18,6 +19,18 @@ type PostCardProps = {
   likeCount?: number;
   likedByyou?: boolean;
   className?: string;
+  parentCommentState?: {
+    boxVisible: boolean;
+    data: string;
+    id: string;
+  };
+  setParentCommentState?: React.Dispatch<
+    React.SetStateAction<{
+      boxVisible: boolean;
+      data: string;
+      id: string;
+    }>
+  >;
 };
 
 export const PostCard = (props: PostCardProps): React.ReactNode => {
@@ -31,6 +44,8 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
     likedByyou,
     postImage,
     postText,
+    parentCommentState,
+    setParentCommentState,
   } = props;
 
   const {isThemeDark} = useTheme();
@@ -75,7 +90,9 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
           }}
         />
         {menuVisible && (
-          <View className="absolute z-50 right-0 top-8 bg-gray-500 rounded-[8px] px-5 py-3">
+          <View
+            onTouchEnd={e => e.stopPropagation()}
+            className="absolute z-50 right-0 top-8 bg-gray-500 rounded-[8px] px-5 py-3">
             <Text
               style={{fontSize: wp(4)}}
               className="font-redhatmedium text-white">
@@ -137,7 +154,11 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
   const _renderComments = () => {
     if (commentCount) {
       if (commentCount > 1) {
-        return commentCount + ' comments';
+        if (commentCount > 100) {
+          return 'View all comments';
+        } else {
+          return commentCount + ' comments';
+        }
       } else {
         return commentCount + ' comment';
       }
@@ -148,7 +169,7 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
 
   const _renderLikes = () => {
     if (likeCount) {
-      if (likeCount > 1 && likedByyou) {
+      if (likeCount > 1 && liked) {
         if (likeCount - 1 > 1) {
           if (likeCount - 1 > 1000) {
             return 'You' + ' & 1k+ others';
@@ -180,6 +201,15 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
             name="chatbox"
             color={isThemeDark ? 'white' : 'black'}
             size={24}
+            onPress={() => {
+              if (setParentCommentState) {
+                setParentCommentState({
+                  id: post_id,
+                  boxVisible: true,
+                  data: '',
+                });
+              }
+            }}
           />
           <Text
             className="font-redhatmedium text-gray-600 dark:text-white ml-3 -mt-1"
@@ -212,7 +242,15 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
   };
 
   return (
-    <View key={post_id} className={cn(`flex flex-1 w-full ${className}`)}>
+    <View
+      key={post_id}
+      className={cn(`flex flex-1 w-full ${className}`)}
+      onTouchEnd={e => {
+        if (menuVisible) {
+          setMenuVisible(false);
+        }
+        e.stopPropagation();
+      }}>
       {_renderProfileHeaderBar()}
       {_renderPost()}
       {_renderPostFooter()}

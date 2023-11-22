@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {LegacyRef} from 'react';
 
 import {cn} from '@/lib/utils';
 import {useTheme} from '@/providers/ThemeProvider';
@@ -13,7 +13,10 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {Icon} from '../Icon';
 
 export const Input = React.forwardRef(
-  (props: InputProps, _ref): React.ReactNode => {
+  (
+    props: InputProps,
+    ref: LegacyRef<TextInput> | undefined,
+  ): React.ReactNode => {
     const {
       type,
       disabled,
@@ -196,6 +199,7 @@ export const Input = React.forwardRef(
         )}>
         {_renderIcon()}
         <TextInput
+          ref={ref}
           editable={!disabled}
           style={[
             {flex: 1, marginLeft: 8},

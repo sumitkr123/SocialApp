@@ -7,6 +7,7 @@ import {Explore} from '@/screens/core/explore';
 import {Home} from '@/screens/core/home';
 import {Notification} from '@/screens/core/notification';
 import {Profile} from '@/screens/core/profile';
+import {StoryScreen} from '@/screens/other/homeStack';
 import {
   RootAuthStackParamList,
   RootBottomTabParamList,
@@ -25,6 +26,10 @@ export const NativeStackRouteList: Array<{
   {
     name: 'BottomNavBar',
     component: BottomTabNavigator,
+  },
+  {
+    name: 'StoryScreen',
+    component: StoryScreen,
   },
 ];
 

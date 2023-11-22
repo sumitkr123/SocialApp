@@ -2,7 +2,6 @@ import AntDisignIcons from '@/lib/AntDesign.json';
 import EntypoIcons from '@/lib/Entypo.json';
 import FeatherIcons from '@/lib/Feather.json';
 import IoniIcons from '@/lib/Ionicons.json';
-
 import MaterialCommunityIcons from '@/lib/MaterialCommunityIcons.json';
 
 import {ControllerRenderProps, FieldPath, FieldValues} from 'react-hook-form';

@@ -1,12 +1,20 @@
 import React from 'react';
 
+import {CommentBox} from '@/components/features/CommentBox';
 import {PostCard} from '@/components/features/PostCard';
 import {Icon} from '@/components/ui/Icon';
 import {ScreenWrapper} from '@/components/ui/ScreenWrapper';
 import {useTheme} from '@/providers/ThemeProvider';
 import {HomeProps} from '@/types/navigation';
 import {StaticTexts} from '@/utils';
-import {FlatList, Pressable, ScrollView, Text, View} from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {
   heightPercentageToDP as hp,
@@ -17,6 +25,18 @@ export const Home = (props: HomeProps): React.ReactNode => {
   const {route, navigation} = props;
 
   const {isThemeDark} = useTheme();
+
+  const commentRef = React.useRef<TextInput>(null);
+
+  const [commentState, setCommentState] = React.useState<{
+    boxVisible: boolean;
+    data: string;
+    id: string;
+  }>({
+    boxVisible: false,
+    data: '',
+    id: '',
+  });
 
   const _renderYou = (item: any) => {
     return (
@@ -67,6 +87,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
               height: hp(8),
             }}>
             <Animated.Image
+              sharedTransitionTag="tag"
               source={{
                 uri: 'https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg',
               }}
@@ -142,7 +163,9 @@ export const Home = (props: HomeProps): React.ReactNode => {
                   style={{
                     width: hp(10),
                   }}
-                  onPress={() => {}}>
+                  onPress={() => {
+                    navigation.navigate('StoryScreen');
+                  }}>
                   {index === 0 ? _renderYou(item) : _renderOthers(item)}
                 </Pressable>
               );
@@ -161,14 +184,40 @@ export const Home = (props: HomeProps): React.ReactNode => {
                   'https://lh3.googleusercontent.com/ogw/AKPQZvwHnNI_7DZfP_nwoa4qyxOFI1vMw88CU0SjOP6vWA=s32-c-mo'
                 }
                 userName={'dummy_user123'}
-                postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
+                // postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
                 postText="This is loremn Lorem ipsum dolor poster djksfjk asdfgaju asuidfghju sduikgfuias asuidfuias uiksdghfuiasdhfkasdfknasjkn"
-                likeCount={1002}
-                likedByyou={true}
+                likeCount={1}
+                likedByyou={false}
+                commentCount={101}
+                parentCommentState={commentState}
+                setParentCommentState={setCommentState}
               />
             );
           })}
         </View>
+
+        <CommentBox
+          ref={commentRef}
+          type="text"
+          value={commentState.data}
+          visible={commentState.boxVisible}
+          className="bg-white text-black"
+          placeholder="Comment"
+          family={'MaterialCommunity'}
+          iconName={'comment'}
+          iconColor={'black'}
+          onChangeText={comment => {
+            setCommentState(prev => {
+              return {...prev, data: comment};
+            });
+          }}
+          onSubmitEditing={_comment => {
+            setCommentState(prev => {
+              return {...prev, boxVisible: false};
+            });
+          }}
+          returnKeyType="next"
+        />
       </ScrollView>
     </ScreenWrapper>
   );
