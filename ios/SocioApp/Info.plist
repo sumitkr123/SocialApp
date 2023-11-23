@@ -35,6 +35,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+  	<string>This app needs access to the camera, to capture photos.</string>
+  	<key>NSPhotoLibraryUsageDescription</key>
+  	<string>This app needs access to the camera, to show photos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UILaunchStoryboardName</key>
