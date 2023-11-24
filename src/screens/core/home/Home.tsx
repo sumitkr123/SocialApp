@@ -116,7 +116,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
         contentContainerStyle={{paddingBottom: '30%'}}>
         <View
           key={'Header'}
-          className="flex flex-row justify-center items-center mt-7 px-5">
+          className="flex flex-row justify-center items-center mt-5 px-5">
           <View className="flex flex-row flex-1 justify-center items-center">
             <Text
               className="font-redhatextrabold text-black dark:text-white"

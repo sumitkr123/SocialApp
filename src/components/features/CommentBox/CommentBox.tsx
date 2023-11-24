@@ -20,7 +20,7 @@ export const CommentBox = React.forwardRef(
     React.useEffect(() => {
       if (visible) {
         const newRef = ref as RefObject<TextInput>;
-        newRef.current?.focus();
+        setTimeout(() => newRef.current?.focus(), 50);
       }
     }, [visible]);
 

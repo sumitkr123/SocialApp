@@ -48,6 +48,6 @@ export type StoryScreenProps = NativeStackScreenProps<
 >;
 
 export type CreateProps = CompositeScreenProps<
-  NativeStackScreenProps<RootStackParamList>,
-  NativeStackScreenProps<RootBottomTabParamList, 'CreatePost'>
+  NativeStackScreenProps<RootBottomTabParamList, 'CreatePost'>,
+  NativeStackScreenProps<RootStackParamList>
 >;
