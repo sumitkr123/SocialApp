@@ -149,12 +149,6 @@ const NavigationIcon = React.memo(
         icon.name = 'search';
         break;
 
-      case 'CreatePost':
-        label = 'Create Post';
-        icon.family = 'MaterialCommunity';
-        icon.name = 'plus-thick';
-        break;
-
       case 'Notification':
         label = 'Notification';
         icon.family = 'Ionicons';

@@ -4,13 +4,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Auth: undefined;
   BottomNavBar: undefined;
+  CreatePost: undefined;
   StoryScreen: undefined;
 };
 
 export type RootBottomTabParamList = {
   Home: undefined;
   Explore: undefined;
-  CreatePost: undefined;
   Notification: undefined;
   Profile: undefined;
 };
@@ -47,7 +47,7 @@ export type StoryScreenProps = NativeStackScreenProps<
   'StoryScreen'
 >;
 
-export type CreateProps = CompositeScreenProps<
-  NativeStackScreenProps<RootBottomTabParamList, 'CreatePost'>,
-  NativeStackScreenProps<RootStackParamList>
+export type CreateProps = NativeStackScreenProps<
+  RootStackParamList,
+  'CreatePost'
 >;

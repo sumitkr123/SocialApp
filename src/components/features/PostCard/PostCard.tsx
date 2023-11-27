@@ -3,7 +3,7 @@ import React from 'react';
 import {Icon} from '@/components/ui/Icon';
 import {cn} from '@/lib/utils';
 import {useTheme} from '@/providers/ThemeProvider';
-import {Image, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -89,64 +89,8 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
             setMenuVisible(prev => !prev);
           }}
         />
-        {menuVisible && (
-          <View
-            onTouchEnd={e => e.stopPropagation()}
-            className="absolute z-50 right-0 top-8 bg-gray-500 rounded-[8px] px-5 py-3">
-            <Text
-              style={{fontSize: wp(4)}}
-              className="font-redhatmedium text-white">
-              ABCD
-            </Text>
-            <Text
-              style={{fontSize: wp(4)}}
-              className="font-redhatmedium text-white">
-              ABCD
-            </Text>
-            <Text
-              style={{fontSize: wp(4)}}
-              className="font-redhatmedium text-white">
-              ABCD
-            </Text>
-          </View>
-        )}
       </View>
     );
-
-    return fieldBlock;
-  };
-
-  const _renderPost = () => {
-    let fieldBlock: React.ReactNode = <></>;
-
-    if (postImage || postText) {
-      fieldBlock = (
-        <View className="flex flex-1 flex-col gap-2 w-full mt-2">
-          {postImage && (
-            <View
-              className="flex items-center justify-center w-full"
-              style={{
-                height: hp(50),
-              }}>
-              <Image
-                source={{uri: postImage}}
-                className="flex-1 w-full h-full"
-                style={{
-                  resizeMode: 'cover',
-                }}
-              />
-            </View>
-          )}
-          {postText && (
-            <Text
-              className="font-redhatmedium text-black dark:text-white"
-              style={{fontSize: wp(4)}}>
-              {postText}
-            </Text>
-          )}
-        </View>
-      );
-    }
 
     return fieldBlock;
   };
@@ -241,19 +185,78 @@ export const PostCard = (props: PostCardProps): React.ReactNode => {
     return fieldBlock;
   };
 
+  const _renderPost = () => {
+    let fieldBlock: React.ReactNode = <></>;
+
+    if (postImage || postText) {
+      fieldBlock = (
+        <>
+          {_renderProfileHeaderBar()}
+          <View className="flex flex-1 flex-col gap-2 w-full mt-2">
+            {postImage && (
+              <View
+                className="flex items-center justify-center w-full"
+                style={{
+                  height: hp(50),
+                }}>
+                <Image
+                  source={{uri: postImage}}
+                  className="flex-1 w-full h-full"
+                  style={{
+                    resizeMode: 'cover',
+                  }}
+                />
+              </View>
+            )}
+            {postText && (
+              <Text
+                className="font-redhatmedium text-black dark:text-white"
+                style={{fontSize: wp(4)}}>
+                {postText}
+              </Text>
+            )}
+          </View>
+          {menuVisible && (
+            <Pressable
+              onPress={e => e.stopPropagation()}
+              className="absolute z-50 right-0 top-8 bg-gray-500 rounded-[8px] px-5 py-3">
+              <Text
+                onPress={e => console.log('Hello')}
+                style={{fontSize: wp(4)}}
+                className="font-redhatmedium text-white">
+                ABCD
+              </Text>
+              <Text
+                style={{fontSize: wp(4)}}
+                className="font-redhatmedium text-white">
+                ABCD
+              </Text>
+              <Text
+                style={{fontSize: wp(4)}}
+                className="font-redhatmedium text-white">
+                ABCD
+              </Text>
+            </Pressable>
+          )}
+          {_renderPostFooter()}
+        </>
+      );
+    }
+
+    return fieldBlock;
+  };
+
   return (
-    <View
+    <Pressable
       key={post_id}
       className={cn(`flex flex-1 w-full ${className}`)}
-      onTouchEnd={e => {
+      onPress={e => {
         if (menuVisible) {
           setMenuVisible(false);
         }
         e.stopPropagation();
       }}>
-      {_renderProfileHeaderBar()}
       {_renderPost()}
-      {_renderPostFooter()}
-    </View>
+    </Pressable>
   );
 };

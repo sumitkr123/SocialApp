@@ -30,12 +30,13 @@ export const Auth = (): React.JSX.Element => {
         orientation: 'portrait',
         headerShown: false,
       }}>
-      {AuthStackRouteList.map((item, index) => {
+      {AuthStackRouteList.map(({name, component, ...rest}, index) => {
         return (
           <AuthStack.Screen
-            key={item.name}
-            name={item.name}
-            component={item.component}
+            key={name}
+            name={name}
+            component={component}
+            {...rest}
           />
         );
       })}
@@ -47,6 +48,7 @@ export const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
+      detachInactiveScreens={true}
       tabBar={props => <CustomBottomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
@@ -54,12 +56,13 @@ export const BottomTabNavigator = () => {
         tabBarActiveTintColor: 'rgba(250,250,250,0.8)',
         tabBarInactiveTintColor: 'rgba(0,0,0,1)',
       }}>
-      {NativeBottomRouteList.map((item, index) => {
+      {NativeBottomRouteList.map(({name, component, ...rest}, index) => {
         return (
           <BottomTab.Screen
-            key={item.name}
-            name={item.name}
-            component={item.component}
+            key={name}
+            name={name}
+            component={component}
+            {...rest}
           />
         );
       })}
@@ -76,12 +79,13 @@ export const Routes = (): React.JSX.Element => {
             orientation: 'portrait',
             headerShown: false,
           }}>
-          {NativeStackRouteList.map((item, index) => {
+          {NativeStackRouteList.map(({name, component, ...rest}, index) => {
             return (
               <NativeStack.Screen
-                key={item.name}
-                name={item.name}
-                component={item.component}
+                key={name}
+                name={name}
+                component={component}
+                {...rest}
               />
             );
           })}

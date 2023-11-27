@@ -118,18 +118,32 @@ export const Home = (props: HomeProps): React.ReactNode => {
           key={'Header'}
           className="flex flex-row justify-center items-center mt-5 px-5">
           <View className="flex flex-row flex-1 justify-center items-center">
-            <Text
-              className="font-redhatextrabold text-black dark:text-white"
-              style={{fontSize: wp(7.6)}}>
-              {StaticTexts.AppName}
-            </Text>
+            <View className="flex flex-1 items-center justify-center">
+              <Text
+                className="font-redhatextrabold text-black dark:text-white"
+                style={{fontSize: wp(7.6)}}>
+                {StaticTexts.AppName}
+              </Text>
+            </View>
+            <View className="flex flex-row items-center justify-between z-50 absolute right-0">
+              <Icon
+                family={'Ionicons'}
+                name={'notifications'}
+                size={24}
+                color={isThemeDark ? 'white' : 'black'}
+                style={{marginRight: 10}}
+              />
+              <Icon
+                family={'Feather'}
+                name={'plus-circle'}
+                size={24}
+                color={isThemeDark ? 'white' : 'black'}
+                onPress={() => {
+                  navigation.navigate('CreatePost');
+                }}
+              />
+            </View>
           </View>
-          <Icon
-            family={'Ionicons'}
-            name={'notifications'}
-            size={24}
-            color={isThemeDark ? 'white' : 'black'}
-          />
         </View>
         <View key={'Stories'} className="flex overflow-hidden px-5 mt-7">
           <FlatList
@@ -184,7 +198,7 @@ export const Home = (props: HomeProps): React.ReactNode => {
                   'https://lh3.googleusercontent.com/ogw/AKPQZvwHnNI_7DZfP_nwoa4qyxOFI1vMw88CU0SjOP6vWA=s32-c-mo'
                 }
                 userName={'dummy_user123'}
-                // postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
+                postImage="https://cdn.pixabay.com/photo/2016/08/14/11/09/hand-1592415_640.jpg"
                 postText="This is loremn Lorem ipsum dolor poster djksfjk asdfgaju asuidfghju sduikgfuias asuidfuias uiksdghfuiasdhfkasdfknasjkn"
                 likeCount={1}
                 likedByyou={false}
