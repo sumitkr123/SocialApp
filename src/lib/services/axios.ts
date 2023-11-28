@@ -1,3 +1,4 @@
+import {AxiosRequestParams} from '@/types/common';
 import {BASE_URL} from '@env';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
@@ -7,7 +8,7 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
-const toastInterceptor = axiosInstance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   response => {
     if (response.data.toast === true && response.data.message) {
       Toast.show({
@@ -19,7 +20,7 @@ const toastInterceptor = axiosInstance.interceptors.response.use(
     }
     return response;
   },
-  error => {
+  _error => {
     Toast.show({
       type: 'error',
       text1: 'Error',
@@ -29,10 +30,41 @@ const toastInterceptor = axiosInstance.interceptors.response.use(
   },
 );
 
-export const GetUsers = async () => {
+export const axiosGet = async ({url, data}: AxiosRequestParams) => {
   const response = await axiosInstance({
     method: 'get',
-    url: '/users',
+    url: url,
+    data: data,
+  });
+
+  return response;
+};
+
+export const axiosPost = async ({url, data}: AxiosRequestParams) => {
+  const response = await axiosInstance({
+    method: 'post',
+    url: url,
+    data: data,
+  });
+
+  return response;
+};
+
+export const axiosPut = async ({url, data}: AxiosRequestParams) => {
+  const response = await axiosInstance({
+    method: 'put',
+    url: url,
+    data: data,
+  });
+
+  return response;
+};
+
+export const axiosDelete = async ({url, data}: AxiosRequestParams) => {
+  const response = await axiosInstance({
+    method: 'delete',
+    url: url,
+    data: data,
   });
 
   return response;

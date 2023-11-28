@@ -29,7 +29,7 @@ export const ThemeProvider = (props: ThemeProviderProps): React.ReactNode => {
     if (isThemeDark !== (colorScheme === 'dark')) {
       toggleTheme();
     }
-  }, [colorScheme]);
+  }, [colorScheme, isThemeDark]);
 
   return (
     <PreferencesContext.Provider value={{isThemeDark, toggleTheme}}>

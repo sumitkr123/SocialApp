@@ -13,17 +13,11 @@ import {
 import {ScreenWrapper} from '@/components/ui/ScreenWrapper';
 import {LoginFormValidationSchema} from '@/lib/validations';
 import {useTheme} from '@/providers/ThemeProvider';
-import {
-  AntDisignIconsType,
-  EntypoIconsType,
-  FeatherIconsType,
-  IoniIconsType,
-  MaterialCommunityIconsType,
-} from '@/types/common';
+import {FormInputListItemType, FormInputListType} from '@/types/common';
 import {LoginProps} from '@/types/navigation';
 import {StaticTexts} from '@/utils';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {ControllerRenderProps, useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -31,7 +25,7 @@ import {
 } from 'react-native-responsive-screen';
 import * as yup from 'yup';
 
-export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
+export const Login = ({navigation}: LoginProps): React.ReactNode => {
   const {isThemeDark} = useTheme();
 
   const form = useForm<yup.InferType<typeof LoginFormValidationSchema>>({
@@ -43,25 +37,7 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
     mode: 'all',
   });
 
-  const FormInputList: Array<{
-    name: keyof yup.InferType<typeof LoginFormValidationSchema>;
-    label?: string;
-    placeholder?: string;
-    required?: boolean;
-    type: 'text' | 'email' | 'password' | 'number';
-    iconFamily?:
-      | 'AntDesign'
-      | 'Entypo'
-      | 'Feather'
-      | 'Ionicons'
-      | 'MaterialCommunity';
-    iconName?:
-      | keyof AntDisignIconsType
-      | keyof EntypoIconsType
-      | keyof FeatherIconsType
-      | keyof IoniIconsType
-      | keyof MaterialCommunityIconsType;
-  }> = [
+  const FormInputList: FormInputListType<typeof LoginFormValidationSchema> = [
     {
       name: 'username',
       label: StaticTexts.LoginScreen.Input1,
@@ -89,7 +65,16 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
     navigation.replace('BottomNavBar');
   };
 
-  const _renderFormInput = (item: any, field: any) => {
+  const _renderFormInput = (
+    item: FormInputListItemType<typeof LoginFormValidationSchema>,
+    field: ControllerRenderProps<
+      {
+        username: string;
+        password: string;
+      },
+      'username' | 'password'
+    >,
+  ) => {
     let fieldBlock: React.ReactNode = <></>;
     if (item.iconFamily && item.iconName) {
       fieldBlock = (
@@ -148,47 +133,51 @@ export const Login = ({route, navigation}: LoginProps): React.ReactNode => {
                 {StaticTexts.LoginScreen.ContentHeader}
               </Text>
 
-              {FormInputList.map(item => {
-                return (
-                  <FormField
-                    key={item.name}
-                    name={item.name}
-                    control={form.control}
-                    render={({field}) => {
-                      return (
-                        <FormItem className="flex flex-col gap-3 mb-8">
-                          <View className="flex flex-row flex-1z items-center justify-between">
-                            <FormLabel
-                              className="text-black dark:text-white font-redhatmedium"
-                              style={{fontSize: wp(4.5)}}>
-                              {item.label}
-                              {item.required && (
-                                <Text className="text-red-700">{'*'}</Text>
+              {FormInputList.map(
+                (
+                  item: FormInputListItemType<typeof LoginFormValidationSchema>,
+                ) => {
+                  return (
+                    <FormField
+                      key={item.name}
+                      name={item.name}
+                      control={form.control}
+                      render={({field}) => {
+                        return (
+                          <FormItem className="flex flex-col gap-3 mb-8">
+                            <View className="flex flex-row flex-1z items-center justify-between">
+                              <FormLabel
+                                className="text-black dark:text-white font-redhatmedium"
+                                style={{fontSize: wp(4.5)}}>
+                                {item.label}
+                                {item.required && (
+                                  <Text className="text-red-700">{'*'}</Text>
+                                )}
+                              </FormLabel>
+                              {item.name === 'password' && (
+                                <Text
+                                  className="text-indigo-600 font-redhatmedium"
+                                  style={{fontSize: hp(1.9)}}
+                                  onPress={() => {}}>
+                                  {StaticTexts.LoginScreen.ForgotPass}
+                                </Text>
                               )}
-                            </FormLabel>
-                            {item.name === 'password' && (
-                              <Text
-                                className="text-indigo-600 font-redhatmedium"
-                                style={{fontSize: hp(1.9)}}
-                                onPress={() => {}}>
-                                {StaticTexts.LoginScreen.ForgotPass}
-                              </Text>
-                            )}
-                          </View>
+                            </View>
 
-                          <FormControl>
-                            {_renderFormInput(item, field)}
-                          </FormControl>
-                          <FormMessage
-                            className="text-red-600 font-redhatbold"
-                            style={{fontSize: wp(3.8)}}
-                          />
-                        </FormItem>
-                      );
-                    }}
-                  />
-                );
-              })}
+                            <FormControl>
+                              {_renderFormInput(item, field)}
+                            </FormControl>
+                            <FormMessage
+                              className="text-red-600 font-redhatbold"
+                              style={{fontSize: wp(3.8)}}
+                            />
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  );
+                },
+              )}
 
               <Button
                 title={StaticTexts.Login}

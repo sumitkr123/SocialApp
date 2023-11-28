@@ -3,7 +3,6 @@ import EntypoIcons from '@/lib/Entypo.json';
 import FeatherIcons from '@/lib/Feather.json';
 import IoniIcons from '@/lib/Ionicons.json';
 import MaterialCommunityIcons from '@/lib/MaterialCommunityIcons.json';
-
 import {ControllerRenderProps, FieldPath, FieldValues} from 'react-hook-form';
 import {
   ColorValue,
@@ -16,6 +15,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {IconProps} from 'react-native-vector-icons/Icon';
+import * as yup from 'yup';
 
 export type AntDisignIconsType = typeof AntDisignIcons;
 export type EntypoIconsType = typeof EntypoIcons;
@@ -114,3 +114,42 @@ export type TPhotoFromGallery = {
   playableDuration: number;
   orientation: number | null;
 };
+
+export type AxiosRequestParams = {
+  url: string;
+  data: unknown;
+};
+
+export type FormInputListItemType<
+  Type extends yup.ISchema<any, any, any, any>,
+> = {
+  name: keyof yup.InferType<Type>;
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
+  type: 'text' | 'email' | 'password' | 'number' | 'checkbox' | 'radio';
+} & (
+  | {
+      iconFamily?: 'AntDesign';
+      iconName?: keyof AntDisignIconsType;
+    }
+  | {
+      iconFamily?: 'Entypo';
+      iconName?: keyof EntypoIconsType;
+    }
+  | {
+      iconFamily?: 'Feather';
+      iconName?: keyof FeatherIconsType;
+    }
+  | {
+      iconFamily?: 'Ionicons';
+      iconName?: keyof IoniIconsType;
+    }
+  | {
+      iconFamily?: 'MaterialCommunity';
+      iconName?: keyof MaterialCommunityIconsType;
+    }
+);
+
+export type FormInputListType<Type extends yup.ISchema<any, any, any, any>> =
+  FormInputListItemType<Type>[];

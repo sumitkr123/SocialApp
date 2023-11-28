@@ -121,6 +121,7 @@ export const Create = (props: CreateProps): React.ReactNode => {
             renderItem={({item, index}) => {
               return (
                 <Pressable
+                  key={item.uri.slice(0, 10) + index}
                   onPress={() => {
                     setSelectedPhoto(item);
                   }}

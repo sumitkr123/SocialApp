@@ -13,17 +13,11 @@ import {
 import {ScreenWrapper} from '@/components/ui/ScreenWrapper';
 import {RegistrationFormValidationSchema} from '@/lib/validations';
 import {useTheme} from '@/providers/ThemeProvider';
-import {
-  AntDisignIconsType,
-  EntypoIconsType,
-  FeatherIconsType,
-  IoniIconsType,
-  MaterialCommunityIconsType,
-} from '@/types/common';
+import {FormInputListItemType, FormInputListType} from '@/types/common';
 import {RegisterProps} from '@/types/navigation';
 import {StaticTexts} from '@/utils';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {ControllerRenderProps, useForm} from 'react-hook-form';
 import {ScrollView, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -50,25 +44,9 @@ export const Register = ({
     mode: 'all',
   });
 
-  const FormInputList: Array<{
-    name: keyof yup.InferType<typeof RegistrationFormValidationSchema>;
-    label?: string;
-    placeholder?: string;
-    required?: boolean;
-    type: 'text' | 'email' | 'password' | 'number' | 'checkbox' | 'radio';
-    iconFamily?:
-      | 'AntDesign'
-      | 'Entypo'
-      | 'Feather'
-      | 'Ionicons'
-      | 'MaterialCommunity';
-    iconName?:
-      | keyof AntDisignIconsType
-      | keyof EntypoIconsType
-      | keyof FeatherIconsType
-      | keyof IoniIconsType
-      | keyof MaterialCommunityIconsType;
-  }> = [
+  const FormInputList: FormInputListType<
+    typeof RegistrationFormValidationSchema
+  > = [
     {
       name: 'fullname',
       label: StaticTexts.SignUpScreen.Input1,
@@ -122,7 +100,25 @@ export const Register = ({
     console.log(data, 'data');
   };
 
-  const _renderFormInput = (item: any, field: any) => {
+  const _renderFormInput = (
+    item: FormInputListItemType<typeof RegistrationFormValidationSchema>,
+    field: ControllerRenderProps<
+      {
+        fullname: string;
+        username: string;
+        email: string;
+        password: string;
+        repeatPassword: string;
+        acceptedConditions: boolean;
+      },
+      | 'fullname'
+      | 'username'
+      | 'email'
+      | 'password'
+      | 'repeatPassword'
+      | 'acceptedConditions'
+    >,
+  ) => {
     let fieldBlock: React.ReactNode = <></>;
     if (item.iconFamily && item.iconName) {
       fieldBlock = (
@@ -181,39 +177,45 @@ export const Register = ({
                 {StaticTexts.SignUpScreen.ContentHeader}
               </Text>
 
-              {FormInputList.map(item => {
-                return (
-                  <FormField
-                    key={item.name}
-                    name={item.name}
-                    control={form.control}
-                    render={({field}) => {
-                      return (
-                        <FormItem className="flex flex-col gap-3 mb-8">
-                          {item.type !== 'checkbox' && (
-                            <FormLabel
-                              className="text-black dark:text-white font-redhatmedium"
-                              style={{fontSize: wp(4.5)}}>
-                              {item.label}
-                              {item.required && (
-                                <Text className="text-red-700">{'*'}</Text>
-                              )}
-                            </FormLabel>
-                          )}
+              {FormInputList.map(
+                (
+                  item: FormInputListItemType<
+                    typeof RegistrationFormValidationSchema
+                  >,
+                ) => {
+                  return (
+                    <FormField
+                      key={item.name}
+                      name={item.name}
+                      control={form.control}
+                      render={({field}) => {
+                        return (
+                          <FormItem className="flex flex-col gap-3 mb-8">
+                            {item.type !== 'checkbox' && (
+                              <FormLabel
+                                className="text-black dark:text-white font-redhatmedium"
+                                style={{fontSize: wp(4.5)}}>
+                                {item.label}
+                                {item.required && (
+                                  <Text className="text-red-700">{'*'}</Text>
+                                )}
+                              </FormLabel>
+                            )}
 
-                          <FormControl>
-                            {_renderFormInput(item, field)}
-                          </FormControl>
-                          <FormMessage
-                            className="text-red-600 font-redhatbold"
-                            style={{fontSize: wp(3.8)}}
-                          />
-                        </FormItem>
-                      );
-                    }}
-                  />
-                );
-              })}
+                            <FormControl>
+                              {_renderFormInput(item, field)}
+                            </FormControl>
+                            <FormMessage
+                              className="text-red-600 font-redhatbold"
+                              style={{fontSize: wp(3.8)}}
+                            />
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  );
+                },
+              )}
 
               <Button
                 title={StaticTexts.Signup}
